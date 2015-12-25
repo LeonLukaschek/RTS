@@ -6,38 +6,51 @@ public class AI_Soldier_01 : MonoBehaviour
     [Header("Patrol")]
     public Transform[] points;
 
+    public bool isSelected;
+
     private int desPoint = 0;
 
-    NavMeshAgent agent;
+    private NavMeshAgent agent;
 
     bool patrol = false;
+    bool hasTarget = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
-
+        agent.autoBraking = true;
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        float distance = this.transform.position.magnitude - agent.destination.magnitude;
+
+        if (isSelected)
         {
-            RaycastHit hit;
-            patrol = false;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+            if (Input.GetMouseButtonDown(1))
             {
-                agent.destination = hit.point;
+                RaycastHit hit;
+                patrol = false;
+                hasTarget = true;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+                {
+                    agent.destination = hit.point;
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            patrol = true;
-            GoToNextPoint();
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                patrol = true;
+                hasTarget = false;
+                GoToNextPoint();
+            }
+
+            //Go to next patrol point if in range
+            if (agent.remainingDistance < .5f && patrol)
+                GoToNextPoint(); 
+
         }
 
-        if (agent.remainingDistance < 0.5f && patrol)
-            GoToNextPoint();
 
     }
 

@@ -20,8 +20,8 @@ public class Spawner : MonoBehaviour
     //count of soldiers
     public int soldierCount;
     //Time between soldier spawns
-    public int timeBetweenSpawn;
-    //spawned soldier cont
+    public float timeBetweenSpawn;
+    //spawned soldier count
     private int spawnedSoldiers = 0;
     //Time used for spawning
     private float curTime;
