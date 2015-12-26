@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CameraControls : MonoBehaviour
 {
@@ -7,14 +7,14 @@ public class CameraControls : MonoBehaviour
     public float rotationSpeed = 4f;
     public float smoothness = 0.85f;
 
-    Vector3 targetPosition;
-    
+    private Vector3 targetPosition;
+
     public Quaternion targetRotation;
-    float targetRotationY;
-    float targetRotationX;
+    private float targetRotationY;
+    private float targetRotationX;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         targetPosition = transform.position;
         targetRotation = transform.rotation;
@@ -23,32 +23,32 @@ public class CameraControls : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if( Input.GetKey( KeyCode.W ) )
+        if (Input.GetKey(KeyCode.W))
             targetPosition += transform.forward * movementSpeed;
-        if( Input.GetKey( KeyCode.A ) )
+        if (Input.GetKey(KeyCode.A))
             targetPosition -= transform.right * movementSpeed;
-        if( Input.GetKey( KeyCode.S ) )
+        if (Input.GetKey(KeyCode.S))
             targetPosition -= transform.forward * movementSpeed;
-        if( Input.GetKey( KeyCode.D ) )
+        if (Input.GetKey(KeyCode.D))
             targetPosition += transform.right * movementSpeed;
-        if( Input.GetKey( KeyCode.Q ) )
+        if (Input.GetKey(KeyCode.Q))
             targetPosition -= transform.up * movementSpeed;
-        if( Input.GetKey( KeyCode.E ) )
+        if (Input.GetKey(KeyCode.E))
             targetPosition += transform.up * movementSpeed;
 
-        if( Input.GetMouseButton( 1 ) )
+        if (Input.GetMouseButton(1))
         {
             Cursor.visible = false;
-            targetRotationY += Input.GetAxis( "Mouse X" ) * rotationSpeed;
-            targetRotationX -= Input.GetAxis( "Mouse Y" ) * rotationSpeed;
-            targetRotation = Quaternion.Euler( targetRotationX, targetRotationY, 0.0f );
+            targetRotationY += Input.GetAxis("Mouse X") * rotationSpeed;
+            targetRotationX -= Input.GetAxis("Mouse Y") * rotationSpeed;
+            targetRotation = Quaternion.Euler(targetRotationX, targetRotationY, 0.0f);
         }
         else
             Cursor.visible = true;
 
-        transform.position = Vector3.Lerp( transform.position, targetPosition, ( 1.0f - smoothness ) );
-        transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, ( 1.0f - smoothness ) );
+        transform.position = Vector3.Lerp(transform.position, targetPosition, (1.0f - smoothness));
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, (1.0f - smoothness));
     }
 }

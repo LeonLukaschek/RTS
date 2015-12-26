@@ -1,17 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     //Used to define an area to spawn the soldiers in
     [Header("Spawn Area")]
     public Vector3 maxSpawnArea;
+
     public Vector3 minSpawnArea;
 
-    [Space (10)]
+    [Space(10)]
     [Header("Object References")]
     //The soldier prefab
     public GameObject soldierPref;
+
     //Used for organisation
     public GameObject soldierHolder;
 
@@ -19,23 +21,27 @@ public class Spawner : MonoBehaviour
     [Header("Other")]
     //count of soldiers
     public int soldierCount;
+
     //Time between soldier spawns
     public float timeBetweenSpawn;
-    //spawned soldier count
+
+    //spawned soldier counts
     private int spawnedSoldiers = 0;
+
     //Time used for spawning
     private float curTime;
 
-    void Start()
+    private void Start()
     {
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         SpawnSoldier(soldierCount);
     }
+
     //Spawns a soldiers
-    void SpawnSoldier(int count)
+    private void SpawnSoldier(int count)
     {
         curTime += Time.deltaTime;
         if (spawnedSoldiers < count && curTime > timeBetweenSpawn)

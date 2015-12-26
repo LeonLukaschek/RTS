@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class AI_Soldier_01 : MonoBehaviour
 {
@@ -12,17 +12,17 @@ public class AI_Soldier_01 : MonoBehaviour
 
     private NavMeshAgent agent;
 
-    bool patrol = false;
-    bool hasTarget = false;
+    private bool patrol = false;
+    private bool hasTarget = false;
 
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
         agent.autoBraking = true;
     }
 
-    void Update()
+    private void Update()
     {
         float distance = this.transform.position.magnitude - agent.destination.magnitude;
 
@@ -46,15 +46,12 @@ public class AI_Soldier_01 : MonoBehaviour
             }
 
             //Go to next patrol point if in range
-            if (agent.remainingDistance < .5f && patrol)
-                GoToNextPoint(); 
-
         }
-
-
+        if (agent.remainingDistance < .5f && patrol)
+            GoToNextPoint();
     }
 
-    void GoToNextPoint()
+    private void GoToNextPoint()
     {
         // Returns if no points have been set up
         if (points.Length == 0)
@@ -67,6 +64,4 @@ public class AI_Soldier_01 : MonoBehaviour
         // cycling to the start if necessary.
         desPoint = (desPoint + 1) % points.Length;
     }
-
-
 }
