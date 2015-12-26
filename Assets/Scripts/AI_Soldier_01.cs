@@ -1,30 +1,40 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class AI_Soldier_01 : MonoBehaviour
 {
+    public enum SoldierState { Idle, Patroling, MovingToTarget, Attacking }
+
     [Header("Patrol")]
     public Transform[] points;
 
+    public SoldierState currentState;
+
     public bool isSelected;
 
+    public int closestIndex;
+
     private int desPoint = 0;
+    private int count;
+
+    private float lastInList;
+    private float closest;
 
     private NavMeshAgent agent;
+    private VieldOfView fow;
 
     private bool patrol = false;
-    private bool hasTarget = false;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.autoBraking = false;
+        fow = GetComponent<VieldOfView>();
         agent.autoBraking = true;
     }
 
     private void Update()
     {
-        float distance = this.transform.position.magnitude - agent.destination.magnitude;
+        FindClosestEnemy();
 
         if (isSelected)
         {
@@ -32,23 +42,45 @@ public class AI_Soldier_01 : MonoBehaviour
             {
                 RaycastHit hit;
                 patrol = false;
-                hasTarget = true;
+
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
                 {
                     agent.destination = hit.point;
+                    currentState = SoldierState.MovingToTarget;
                 }
             }
             else if (Input.GetKeyDown(KeyCode.F))
             {
                 patrol = true;
-                hasTarget = false;
+                currentState = SoldierState.Patroling;
                 GoToNextPoint();
             }
-
-            //Go to next patrol point if in range
         }
-        if (agent.remainingDistance < .5f && patrol)
+
+        //If distance to destination in less than 2.5 and patrol is true, go to next point
+        if (agent.remainingDistance < 2.5f && patrol)
             GoToNextPoint();
+    }
+
+    private void FindClosestEnemy()
+    {
+        if (fow.visibleTargets.Count > 0)
+        {
+            foreach (Transform t in fow.visibleTargets)
+            {
+                float distance = Vector3.Distance(this.transform.position, t.transform.position);
+                if (distance < lastInList)
+                {
+                    closest = distance;
+                    closestIndex = count;
+                }
+
+                lastInList = distance;
+                count++;
+            }
+            Debug.Log("Closest: " + closestIndex);
+            count = 0; 
+        }
     }
 
     private void GoToNextPoint()

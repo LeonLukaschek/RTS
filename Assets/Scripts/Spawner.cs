@@ -46,7 +46,6 @@ public class Spawner : MonoBehaviour
         curTime += Time.deltaTime;
         if (spawnedSoldiers < count && curTime > timeBetweenSpawn)
         {
-            Debug.Log("Spawning a soldier");
 
             GameObject soldier = Instantiate(soldierPref, new Vector3(Random.Range(minSpawnArea.x, maxSpawnArea.x), Random.Range(minSpawnArea.y, maxSpawnArea.y), Random.Range(minSpawnArea.z, maxSpawnArea.z)), Quaternion.identity) as GameObject;
             //Add soldier to soldierHolder GameObject

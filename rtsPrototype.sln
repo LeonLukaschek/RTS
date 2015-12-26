@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rtsPrototype.CSharp", "rtsPrototype.CSharp.csproj", "{050621B2-65E9-CEA3-FF1B-AA88A4AF0ECE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rtsPrototype.CSharp.Editor", "rtsPrototype.CSharp.Editor.csproj", "{641C733C-C6A7-2E2F-B74D-DFAA105BB81B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{050621B2-65E9-CEA3-FF1B-AA88A4AF0ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{050621B2-65E9-CEA3-FF1B-AA88A4AF0ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{050621B2-65E9-CEA3-FF1B-AA88A4AF0ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641C733C-C6A7-2E2F-B74D-DFAA105BB81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641C733C-C6A7-2E2F-B74D-DFAA105BB81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641C733C-C6A7-2E2F-B74D-DFAA105BB81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641C733C-C6A7-2E2F-B74D-DFAA105BB81B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
