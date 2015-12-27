@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\CameraControls.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\Formation.cs" />
     <Compile Include="Assets\Scripts\SelectableUnitComponent.cs" />
     <Compile Include="Assets\Scripts\SoldierSpawnButton.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />

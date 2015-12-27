@@ -1,8 +1,11 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public List<GameObject> spawnedSoldiersList = new List<GameObject>();
+
     //Used to define an area to spawn the soldiers in
     [Header("Spawn Area")]
     public Vector3 maxSpawnArea;
@@ -46,9 +49,8 @@ public class Spawner : MonoBehaviour
         curTime += Time.deltaTime;
         if (spawnedSoldiers < count && curTime > timeBetweenSpawn)
         {
-
             GameObject soldier = Instantiate(soldierPref, new Vector3(Random.Range(minSpawnArea.x, maxSpawnArea.x), Random.Range(minSpawnArea.y, maxSpawnArea.y), Random.Range(minSpawnArea.z, maxSpawnArea.z)), Quaternion.identity) as GameObject;
-            //Add soldier to soldierHolder GameObject
+            spawnedSoldiersList.Add(soldier);
             soldier.transform.SetParent(soldierHolder.transform);
             spawnedSoldiers++;
             curTime = 0;

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class UnitSelectionComponent : MonoBehaviour
 {
-    private bool isSelecting = false;
+    public bool isSelecting = false;
     private Vector3 mousePosition1;
 
     public GameObject selectionCirclePrefab;
+
+    public List<GameObject> selectedSoldiers = new List<GameObject>();
 
     //Used for highlighting
     public Material startMat;
@@ -48,13 +50,17 @@ public class UnitSelectionComponent : MonoBehaviour
                     ai_scirpt.isSelected = false;
                     //Unhightlight
                     selectableObject.GetComponent<Renderer>().material = startMat;
+                    selectedSoldiers.Clear();
                 }
             }
 
             var sb = new StringBuilder();
             sb.AppendLine(string.Format("Selecting [{0}] Units", selectedObjects.Count));
             foreach (var selectedObject in selectedObjects)
+            {
                 sb.AppendLine("-> " + selectedObject.gameObject.name);
+                selectedSoldiers.Add(selectedObject.transform.root.gameObject);
+            }
             Debug.Log(sb.ToString());
 
             isSelecting = false;
