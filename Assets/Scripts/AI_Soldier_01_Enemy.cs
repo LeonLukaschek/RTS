@@ -32,14 +32,12 @@ public class AI_Soldier_01_Enemy : MonoBehaviour
 
     private void Patrol()
     {
-
         agent.destination = wayPoints[currentPoint].position;
-
 
         if (agent.remainingDistance <= .5f)
         {
             currentPoint++;
-            if(wayPoints.Length <= currentPoint)
+            if (wayPoints.Length <= currentPoint)
             {
                 currentPoint = 0;
             }

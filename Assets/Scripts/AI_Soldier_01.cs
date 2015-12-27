@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AI_Soldier_01 : MonoBehaviour
 {
@@ -16,12 +15,14 @@ public class AI_Soldier_01 : MonoBehaviour
 
     private int desPoint = 0;
     private int count;
+    private int counter;
 
     private float lastInList;
     private float closest;
 
     private NavMeshAgent agent;
     private VieldOfView fow;
+    private Transform closeseTransform;
 
     private bool patrol = false;
 
@@ -34,8 +35,30 @@ public class AI_Soldier_01 : MonoBehaviour
 
     private void Update()
     {
-        FindClosestEnemy();
+        ControllUnit();
 
+        //If distance to destination in less than 2.5 and patrol is true, go to next point
+        if (agent.remainingDistance < 2.5f && patrol)
+            GoToNextPoint();
+
+        //Find the closest enemy in fieldoview if there is an enemy
+        FindClosestEnemy();
+        //Get the size of the list
+        foreach (Transform t in fow.visibleTargets)
+        {
+            counter++;
+        }
+        //If there are enemys in the list, look at them
+        if (counter != 0)
+        {
+            closeseTransform = fow.visibleTargets[closestIndex];
+            this.transform.LookAt(closeseTransform);
+        }
+    }
+
+    //Move the unit or let it patrol
+    private void ControllUnit()
+    {
         if (isSelected)
         {
             if (Input.GetMouseButtonDown(1))
@@ -56,12 +79,9 @@ public class AI_Soldier_01 : MonoBehaviour
                 GoToNextPoint();
             }
         }
-
-        //If distance to destination in less than 2.5 and patrol is true, go to next point
-        if (agent.remainingDistance < 2.5f && patrol)
-            GoToNextPoint();
     }
 
+    //Finds the closest enemy in the vof.visibleTargets list
     private void FindClosestEnemy()
     {
         if (fow.visibleTargets.Count > 0)
@@ -78,8 +98,7 @@ public class AI_Soldier_01 : MonoBehaviour
                 lastInList = distance;
                 count++;
             }
-            Debug.Log("Closest: " + closestIndex);
-            count = 0; 
+            count = 0;
         }
     }
 

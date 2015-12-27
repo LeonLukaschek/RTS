@@ -1,10 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class VieldOfView : MonoBehaviour {
-
+public class VieldOfView : MonoBehaviour
+{
     public float viewRadius;
+
     [Range(0, 360)]
     public float viewAngle;
 
@@ -14,12 +15,12 @@ public class VieldOfView : MonoBehaviour {
     //[HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
-    void Start()
+    private void Start()
     {
         StartCoroutine("FindTargetsWithDelay", .1f);
     }
 
-    IEnumerator FindTargetsWithDelay(float delay)
+    private IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
         {
@@ -28,19 +29,19 @@ public class VieldOfView : MonoBehaviour {
         }
     }
 
-    void FindVisibleTargets()
+    private void FindVisibleTargets()
     {
         visibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
-        for(int i = 0; i < targetsInViewRadius.Length; i++)
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if(Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
-                if(!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
                 }
@@ -56,5 +57,4 @@ public class VieldOfView : MonoBehaviour {
         }
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-
 }
