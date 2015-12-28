@@ -18,12 +18,14 @@ public class Spawner : MonoBehaviour
     public GameObject soldierPref;
 
     //Used for organisation
-    public GameObject soldierHolder;
+    //public GameObject soldierHolder;
 
     [Space(10)]
     [Header("Other")]
     //count of soldiers
     public int soldierCount;
+
+    public int counter;
 
     //Time between soldier spawns
     public float timeBetweenSpawn;
@@ -44,15 +46,16 @@ public class Spawner : MonoBehaviour
     }
 
     //Spawns a soldiers
-    private void SpawnSoldier(int count)
+    public void SpawnSoldier(int count)
     {
         curTime += Time.deltaTime;
         if (spawnedSoldiers < count && curTime > timeBetweenSpawn)
         {
             GameObject soldier = Instantiate(soldierPref, new Vector3(Random.Range(minSpawnArea.x, maxSpawnArea.x), Random.Range(minSpawnArea.y, maxSpawnArea.y), Random.Range(minSpawnArea.z, maxSpawnArea.z)), Quaternion.identity) as GameObject;
             spawnedSoldiersList.Add(soldier);
-            soldier.transform.SetParent(soldierHolder.transform);
+            //soldier.transform.SetParent(soldierHolder.transform);
             spawnedSoldiers++;
+            counter++;
             curTime = 0;
         }
     }

@@ -10,9 +10,13 @@ public class AI_Soldier_01 : MonoBehaviour
 
     public SoldierState currentState;
 
+    public Quaternion rota;
+
     public bool isSelected;
 
     public int closestIndex;
+
+    public float offset;
 
     private int desPoint = 0;
     private int count;
@@ -27,8 +31,14 @@ public class AI_Soldier_01 : MonoBehaviour
 
     private bool patrol = false;
 
+    private void Awake()
+    {
+    }
+
     private void Start()
     {
+        Spawner sp = GameObject.Find("Spawnhouse").GetComponent<Spawner>();
+        this.name = "AI_Soldier(" + sp.counter + ")";
         agent = GetComponent<NavMeshAgent>();
         fow = GetComponent<VieldOfView>();
         agent.autoBraking = true;
@@ -70,6 +80,7 @@ public class AI_Soldier_01 : MonoBehaviour
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
                 {
                     agent.destination = hit.point;
+                    rota = hit.transform.rotation;
                     currentState = SoldierState.MovingToTarget;
                 }
             }
@@ -115,5 +126,10 @@ public class AI_Soldier_01 : MonoBehaviour
         // Choose the next point in the array as the destination,
         // cycling to the start if necessary.
         desPoint = (desPoint + 1) % points.Length;
+    }
+
+    public void AddOffset(float increase)
+    {
+        offset = increase;
     }
 }
